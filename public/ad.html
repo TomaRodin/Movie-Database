@@ -103,17 +103,17 @@ body {
 
 <div class="topnav">
   <a class="active" href="/">Home</a>
-  <a href="/advance_search">Advance Search</a>
+  <a href="/movies/search">Search</a>
   <a href="#contact">Contact</a>
 
 </div>
-    <div class="search-container">
+    <div class="search-container" style="margin-left: 15px;">
         <input type="text" placeholder="Search.." id="movie">
         <button class="button" onclick="myfunction()"><i class="fa fa-search"></i></button>
     <div>
 
 
-        <div class="wrapper">
+        <div class="wrapper" id="wrapper" style="margin-left: 15px;">
 
         </div>
 
@@ -128,9 +128,14 @@ body {
         
 
         function myfunction() {
+          document.getElementById('wrapper').innerHTML = ""
             var inputVal = document.getElementById('movie').value
             $.getJSON( "/advanced_search/"+inputVal, function(data){
-      
+              
+      const found = data.length
+
+      document.getElementById('wrapper').innerHTML ="<h3>Founded: "+found+"</h3>"
+
 
       const parentWrapper = document.querySelector('.wrapper');
       data.forEach((el) => {
@@ -140,6 +145,11 @@ body {
           const child = document.createElement('h2');
           child.textContent = el.title;
           div.appendChild(child);
+          const year = document.createElement('p')
+          const release = el.release_date
+          const release_year = release.substring(0,4)
+          year.textContent = release_year
+          div.appendChild(year)
           const link = document.createElement('a')
           link.textContent = "View"
           link.href = "http://localhost:3000/search/"+ el. title
@@ -148,8 +158,12 @@ body {
           parentWrapper.appendChild(space)
           parentWrapper.append(div);
       });
-      
+      $.getJSON( "https://www.omdbapi.com/?t="+inputVal+"&y="+release_year+"&apikey=e69e752c", function(data){
+          console.log(data)
+      })
 });
+
         }
+        
     </script>
 </html>

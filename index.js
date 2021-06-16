@@ -20,10 +20,7 @@ app.get('/',function(req,res){
 app.get('/search/:name',function(req,res){
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Connected to the database.');
+
     });
     var title = req.params.name
     db.all("SELECT * FROM movies WHERE lower(title) ="+"'"+title.toLowerCase()+"'",function (err,rows){
@@ -48,10 +45,6 @@ app.get('/advanced_search/:name',function(req,res){
     var title = req.params.name
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Connected to the database.');
     });
 
     db.all("SELECT * FROM movies WHERE lower(title) LIKE "+"'%"+title.toLowerCase()+"%'",function (err,rows){

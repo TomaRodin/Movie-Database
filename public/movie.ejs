@@ -95,13 +95,16 @@ body {
 .director {
     margin-left: 300px;
 }
+.runtime {
+  margin-left: 100px;
+}
 </style>
 
 <body>
 
 <div class="topnav">
   <a class="active" href="/">Home</a>
-  <a href="#about">About</a>
+  <a href="/movies/search">Search</a>
   <a href="#contact">Contact</a>
   <div class="search-container">
       <input type="text" placeholder="Search.." id="movie">
@@ -113,7 +116,7 @@ body {
         <h1><%=title%></h1>
         <p><%=release%></p>
         <br>
-    
+        <div id="poster" style="text-align: center;"></div>
         </div>
         <br>
         <br>
@@ -156,11 +159,23 @@ body {
           <p><%=plot%></p>  
         </div>
 
+        <div class="runtime">
+          <h3>Run Time</h3>
+          <p id="runtime"></p>
+        </div>
+
     </body>
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         onload: function convertToInternationalCurrencySystem (labelValue) {
+          $.getJSON( "https://www.omdbapi.com/?t=<%=title%>&apikey=e69e752c", function(data){
+            var img = document.createElement('img')
+          img.href= data.Poster
+
+          document.getElementById('poster').innerHTML = "<img src="+data.Poster+" >"
+          document.getElementById('runtime').innerHTML = data.Runtime
+      })
 
         // Nine Zeroes for Billions
         return Math.abs(Number(labelValue)) >= 1.0e+9
@@ -186,8 +201,13 @@ body {
         function getInputValue(){
             
             var inputVal = document.getElementById("movie").value;
-            
+
+            if (inputVal == "") {
+              return
+            }
+            else {
             window.location.href = "http://localhost:3000/search/"+inputVal;
+          }
         }
     
           </script>
