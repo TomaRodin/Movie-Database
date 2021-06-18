@@ -29,10 +29,7 @@ app.get('/search/:name',function(req,res){
             res.send('Not Found')
         }
         else {
-            db.all("SELECT * FROM directors WHERE id ="+"'"+row.director_id+"'",function (err,dir){
-            var dire = dir[0]
-            res.render(__dirname+'/public/movie.ejs', {title:row.title, release: row.release_date, rating: row.vote_average, budget:row.budget, plot:row.overview, director: dire.name})
-        })
+            res.render(__dirname+'/public/movie.ejs', {title:row.title, release: row.release_date, budget:row.budget, plot:row.overview})
         }
     })
 })

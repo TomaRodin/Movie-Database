@@ -81,6 +81,7 @@ body {
 .rating{display:inline-block;margin-right:10px;} 
 .budget{display:inline-block; } 
 .director{display:inline-block; } 
+.genre{display: inline-block;}
 
 .rating {
     margin-left: 100px;
@@ -97,6 +98,9 @@ body {
 }
 .runtime {
   margin-left: 100px;
+}
+.genre {
+  margin-left: 300px;
 }
 </style>
 
@@ -128,7 +132,7 @@ body {
                 <h3 id="element2">Rating</h3>
             
             </div>
-            <p><%=rating%>/10</p>
+            <p id="rating"></p>
         </div>
 
 
@@ -147,8 +151,17 @@ body {
                 <h3 id="element2">Director</h3>
             
             </div>
-            <p><%=director%></p>
+            <p id="director"></p>
         </div>
+
+        <div class="genre" >
+          <div style="display: inline;">
+          <img  id="element1" src="/images/clapperboard.svg" height="30px" width=auto >
+              <h3 id="element2">Genre</h3>
+          
+          </div>
+          <p id="genre"></p>
+      </div>
 
 
         <br>
@@ -170,11 +183,13 @@ body {
     <script>
         onload: function convertToInternationalCurrencySystem (labelValue) {
           $.getJSON( "https://www.omdbapi.com/?t=<%=title%>&apikey=e69e752c", function(data){
-            var img = document.createElement('img')
-          img.href= data.Poster
+
 
           document.getElementById('poster').innerHTML = "<img src="+data.Poster+" >"
           document.getElementById('runtime').innerHTML = data.Runtime
+          document.getElementById('genre').innerHTML = data.Genre
+          document.getElementById('rating').innerHTML = data.imdbRating + "/10"
+          document.getElementById('director').innerHTML = data.Director
       })
 
         // Nine Zeroes for Billions
