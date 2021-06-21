@@ -18,12 +18,15 @@ app.get('/',function(req,res){
 
 
 app.get('/search/:name',function(req,res){
+    var title = req.params.name
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
 
     });
-    var title = req.params.name
+    
+    
     db.all("SELECT * FROM movies WHERE lower(title) ="+"'"+title.toLowerCase()+"'",function (err,rows){
+        
         var row = rows[0]
         if (row == undefined) {
             res.send('Not Found')

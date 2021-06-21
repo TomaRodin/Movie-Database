@@ -78,30 +78,17 @@ body {
 #element1 {display:inline-block;margin-right:10px;} 
 #element2 {display:inline-block; } 
 
-.rating{display:inline-block;margin-right:10px;} 
-.budget{display:inline-block; } 
-.director{display:inline-block; } 
-.genre{display: inline-block;}
+.rating{display:inline-block; padding:100px;} 
+.budget{display:inline-block;padding:100px; } 
+.director{display:inline-block;padding:100px; } 
+.genre{display: inline-block;padding:100px;}
 
-.rating {
-    margin-left: 100px;
-}
-.budget {
 
-    margin-left: 200px;
-}
-.plot {
-    margin-left: 100px;
-}
-.director {
-    margin-left: 300px;
-}
-.runtime {
+.plot, .runtime {
   margin-left: 100px;
 }
-.genre {
-  margin-left: 300px;
-}
+
+
 </style>
 
 <body>
@@ -165,12 +152,13 @@ body {
 
 
         <br>
-        <br>
-        <br>
+
         <div class="plot">
           <h3>Overview</h3>
           <p><%=plot%></p>  
         </div>
+
+        <br>
 
         <div class="runtime">
           <h3>Run Time</h3>
