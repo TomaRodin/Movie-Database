@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDB - Find</title>
+</head>
+
+<style>
+    body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+
+.topnav .search-container {
+  float: right;
+}
+
+#movie[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  background-color: #F2F2F2;
+  border-radius: 10px;
+}
+
+.topnav .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 9px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav .search-container {
+    float: none;
+  }
+  .topnav a, .topnav input[type=text], .topnav .search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
+
+.input {
+    margin-top: 200px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 9px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.button:hover {
+  background: #ccc;
+}
+.wrapper {
+  width: 50%; 
+  margin: 0 auto;
+  text-align: center;
+}
+</style>
+
+
+
+<body>
+
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/movies/search">Search</a>
+        <a href="/find">Find</a>
+        <div class="search-container">
+      
+    </div>
+    <br>
+    <br>
+    <br>
+
+
+
+
+    <div style="margin-left: 100px;">
+        <p>IMDb Rating:</p>
+        <select id ="rating" name="rating">
+            <option value="6">6+</option>
+            <option value="7" selected>7+</option>
+            <option value="8">8+</option>
+            <option value="9">9+</option>
+        </select>
+        
+        
+
+        <br>
+        <p>Minimal release year:</p>
+        <select id ="decade" name="rating">
+          <option value="1950">1950</option>
+          <option value="1960" >1960</option>
+          <option value="1970">1970</option>
+          <option value="1980" selected>1980</option>
+          <option value="1990">1990</option>
+          <option value="2000">2000</option>
+          <option value="2010">2010</option>
+      </select>
+      <br>
+      <br>
+      <input type="checkbox" id="list">
+      <label for="vehicle1"> Full List</label><br>
+        <br>
+      <button onclick="req()">Search</button>
+
+    </div>
+    <hr>
+    
+    
+    <div class="wrapper"></div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function req() {       
+            var rating = document.getElementById('rating').value;
+            var decade = document.getElementById('decade').value;
+
+            if (document.getElementById('list').checked == true) {
+                $.getJSON( "/rating/"+rating+"/"+decade, function(data){
+                data.forEach((el) => {
+                  const parentWrapper = document.querySelector('.wrapper');
+                    const div = document.createElement('div');
+                    div.style.backgroundColor = '#F1F3F4';
+                    div.style.borderRadius = '10px';
+                    div.style.width = '700px'
+                    const child = document.createElement('h2');
+                    child.textContent = el.title;
+                    div.appendChild(child);
+                    const year = document.createElement('p')
+                    const release = el.release_date
+                    const release_year = release.substring(0,4)
+                    year.textContent = release_year
+                    div.appendChild(year)
+                    const link = document.createElement('a')
+                    link.textContent = "View"
+                    link.href = "http://localhost:3000/search/"+ el. title
+                    div.appendChild(link)
+                    const space = document.createElement('br');
+                    parentWrapper.appendChild(space)
+                    parentWrapper.append(div);
+                })
+            })
+      
+            } else {
+              $.getJSON( "/rating/"+rating+"/"+decade, function(data){
+                const slicedArray = data.slice(0, 15);
+                slicedArray.forEach((el) => {
+                  const parentWrapper = document.querySelector('.wrapper');
+                    const div = document.createElement('div');
+                    div.style.backgroundColor = '#F1F3F4';
+                    div.style.borderRadius = '10px';
+                    div.style.width = '700px'
+                    const child = document.createElement('h2');
+                    child.textContent = el.title;
+                    div.appendChild(child);
+                    const year = document.createElement('p')
+                    const release = el.release_date
+                    const release_year = release.substring(0,4)
+                    year.textContent = release_year
+                    div.appendChild(year)
+                    const link = document.createElement('a')
+                    link.textContent = "View"
+                    link.href = "http://localhost:3000/search/"+ el. title
+                    div.appendChild(link)
+                    const space = document.createElement('br');
+                    parentWrapper.appendChild(space)
+                    parentWrapper.append(div);
+            })
+        })
+      }
+    }
+    </script>
+
+    
+</body>
+</html>

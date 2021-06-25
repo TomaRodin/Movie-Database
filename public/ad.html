@@ -104,12 +104,12 @@ body {
 <div class="topnav">
   <a class="active" href="/">Home</a>
   <a href="/movies/search">Search</a>
-  <a href="#contact">Contact</a>
+  <a href="/find">Find</a>
 
 </div>
     <div class="search-container" style="margin-left: 15px;">
         <input type="text" placeholder="Search.." id="movie">
-        <button class="button" onclick="myfunction()"><i class="fa fa-search"></i></button>
+        <button class="button" id="button" onclick="myfunction()"><i class="fa fa-search"></i></button>
     <div>
 
 
@@ -125,7 +125,18 @@ body {
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        
+        var input = document.getElementById("movie");
+
+
+      input.addEventListener("keyup", function(event) {
+   
+        if (event.keyCode === 13) {
+    
+          event.preventDefault();
+      
+          document.getElementById("button").click();
+        }
+      });
 
         function myfunction() {
           document.getElementById('wrapper').innerHTML = ""
