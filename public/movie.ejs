@@ -1,5 +1,6 @@
 <html>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 * {box-sizing: border-box;}
 
@@ -60,6 +61,9 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+  .plot, .runtime {
+  margin-left: 25px;
+}
   .topnav .search-container {
     float: none;
   }
@@ -88,7 +92,19 @@ body {
   margin-left: 100px;
 }
 
-
+.more {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 15px;
+}
 </style>
 
 <body>
@@ -96,7 +112,7 @@ body {
 <div class="topnav">
   <a class="active" href="/">Home</a>
   <a href="/movies/search">Search</a>
-  <a href="#contact">Contact</a>
+  <a href="/find">Find</a>
   <div class="search-container">
       <input type="text" placeholder="Search.." id="movie">
       <button onclick="getInputValue()"><i class="fa fa-search"></i></button>
@@ -150,7 +166,7 @@ body {
           <p id="genre"></p>
       </div>
 
-
+      <div class="plotrun">
         <br>
 
         <div class="plot">
@@ -164,6 +180,11 @@ body {
           <h3>Run Time</h3>
           <p id="runtime"></p>
         </div>
+        </div>
+        <button class="more" style="margin-left: 100px;" onclick="more()">More?</button>
+
+        <div style="margin-left: 100px;" id="moreinf"></div>
+
 
     </body>
 
@@ -211,6 +232,13 @@ body {
             else {
             window.location.href = "http://localhost:3000/search/"+inputVal;
           }
+        }
+
+        function more() {
+          $.getJSON( "https://www.omdbapi.com/?t=<%=title%>&apikey=e69e752c", function(data){
+            document.getElementById('moreinf').innerHTML = "<h3>Actors:</h3> <p>"+data.Actors+"</p><br>"  +  "<h3>Awards: </h3><p>"+data.Awards+"</p><br>" + "<h3>Metascore: </h3><p>"+data.Metascore+"</p>"
+            window.scrollTo(0,document.body.scrollHeight);
+          })
         }
     
           </script>

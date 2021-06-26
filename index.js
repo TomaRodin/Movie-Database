@@ -2,7 +2,6 @@ const bodyParser = require('body-parser')
 var express = require('express')
 var cookieParser = require('cookie-parser')
 var ejs = require('ejs');
-const { response } = require('express');
 var app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,7 +59,7 @@ app.get('/find',function(req,res){
 })
 
 
-app.get('/rating/:number/:decade',function(req,res){
+app.get('/find/:number/:decade',function(req,res){
     var rate = req.params.number
     var decade = req.params.decade
     const sqlite3 = require('sqlite3').verbose();

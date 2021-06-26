@@ -102,11 +102,7 @@
 .button:hover {
   background: #ccc;
 }
-.wrapper {
-  width: 50%; 
-  margin: 0 auto;
-  text-align: center;
-}
+
 </style>
 
 
@@ -160,7 +156,7 @@
     <hr>
     
     
-    <div class="wrapper"></div>
+    <div class="wrapper" style="margin-left: 15px;"></div>
 
 
 
@@ -172,13 +168,14 @@
             var decade = document.getElementById('decade').value;
 
             if (document.getElementById('list').checked == true) {
-                $.getJSON( "/rating/"+rating+"/"+decade, function(data){
+                $.getJSON( "/find/"+rating+"/"+decade, function(data){
                 data.forEach((el) => {
                   const parentWrapper = document.querySelector('.wrapper');
                     const div = document.createElement('div');
                     div.style.backgroundColor = '#F1F3F4';
                     div.style.borderRadius = '10px';
                     div.style.width = '700px'
+                    div.style.height = '130px'
                     const child = document.createElement('h2');
                     child.textContent = el.title;
                     div.appendChild(child);
@@ -189,7 +186,7 @@
                     div.appendChild(year)
                     const link = document.createElement('a')
                     link.textContent = "View"
-                    link.href = "http://localhost:3000/search/"+ el. title
+                    link.href = "/search/"+ el. title
                     div.appendChild(link)
                     const space = document.createElement('br');
                     parentWrapper.appendChild(space)
@@ -198,7 +195,7 @@
             })
       
             } else {
-              $.getJSON( "/rating/"+rating+"/"+decade, function(data){
+              $.getJSON( "/find/"+rating+"/"+decade, function(data){
                 const slicedArray = data.slice(0, 15);
                 slicedArray.forEach((el) => {
                   const parentWrapper = document.querySelector('.wrapper');
@@ -206,6 +203,7 @@
                     div.style.backgroundColor = '#F1F3F4';
                     div.style.borderRadius = '10px';
                     div.style.width = '700px'
+                    div.style.height = '130px'
                     const child = document.createElement('h2');
                     child.textContent = el.title;
                     div.appendChild(child);
@@ -216,7 +214,7 @@
                     div.appendChild(year)
                     const link = document.createElement('a')
                     link.textContent = "View"
-                    link.href = "http://localhost:3000/search/"+ el. title
+                    link.href = "/search/"+ el. title
                     div.appendChild(link)
                     const space = document.createElement('br');
                     parentWrapper.appendChild(space)
