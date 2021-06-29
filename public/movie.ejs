@@ -93,7 +93,34 @@ body {
 }
 
 .more {
-  background-color: #4CAF50;
+  background-color: transparent;
+  border: none;
+  color: rgb(12, 11, 11);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.watchlist {
+  margin-left: 100px;
+  background-color: #F6CA2A;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.addedwatchlist {
+  background-color: grey;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -107,7 +134,7 @@ body {
 }
 </style>
 
-<body>
+<body onload="checkwatchlist()">
 
 <div class="topnav">
   <a class="active" href="/">Home</a>
@@ -180,6 +207,10 @@ body {
           <h3>Run Time</h3>
           <p id="runtime"></p>
         </div>
+
+        <div style="margin-left: 100px;" id="list"></div>
+
+
         </div>
         <button class="more" style="margin-left: 100px;" onclick="more()">More?</button>
 
@@ -239,6 +270,27 @@ body {
             document.getElementById('moreinf').innerHTML = "<h3>Actors:</h3> <p>"+data.Actors+"</p><br>"  +  "<h3>Awards: </h3><p>"+data.Awards+"</p><br>" + "<h3>Metascore: </h3><p>"+data.Metascore+"</p>"
             window.scrollTo(0,document.body.scrollHeight);
           })
+        }
+
+        function watchlist() {
+          $.post( "/save_watchlist", { name: "<%=title%>" } );
+          location.reload();
+        }
+
+        function checkwatchlist() {
+          $.getJSON( "/check_watchlist/<%=title%>", function(data){
+              if (data == "") {
+                  document.getElementById('list').innerHTML = "<div style="+"margin-left: 100px;"+" onclick="+"watchlist()"+" class="+"watchlist"+">Watchlist</div>"
+              }
+              else {
+                document.getElementById('list').innerHTML = "<div style="+"margin-left: 100px;"+" onclick="+"remove()"+" class="+"addedwatchlist"+">Added</div>"
+              }
+          })
+        }
+
+        function remove() {
+          $.post( "/remove_watchlist", { name: "<%=title%>" } );
+          location.reload();
         }
     
           </script>

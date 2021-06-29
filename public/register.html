@@ -35,7 +35,7 @@ body {
   float: right;
 }
 
-#movie[type=text] {
+.topnav input[type=text] {
   padding: 6px;
   margin-top: 8px;
   font-size: 17px;
@@ -61,9 +61,7 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-  .profile {
-    position: absolute;
-  }
+
   .topnav .search-container {
     float: none;
   }
@@ -80,58 +78,52 @@ body {
   }
 }
 
-.input {
-    margin-top: 200px;
-    display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.button {
-  float: right;
-  padding: 6px 10px;
-  margin-top: 9px;
-  margin-right: 16px;
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-}
 
-.button:hover {
-  background: #ccc;
-}
-.profile {
-  height: 40px;
-  width: auto;
-  margin-top: 5px;
-  float: right;
-}
-</style>
+    </style>
 
-<body>
 
-<div class="topnav">
-  <a class="active" href="/">Home</a>
-  <a href="/movies/search">Search</a>
-  <a href="/find">Find</a>
-  <a href="/user" style="float: right;" class="p"><img class="profile" src="/images/user.svg"></a>
-  <div class="search-container">
 
-  </div>
-</div>
+    <body>
 
-    <div class="input">
-      <input type="text" placeholder="Search.." id="movie">
-      <button class="button" onclick="getInputValue()"><i class="fa fa-search"></i></button>
-      
-    </div>
+        <div class="topnav">
+            <a class="active" href="/">Home</a>
+            <a href="/movies/search">Search</a>
+            <a href="/find">Find</a>
+            <div class="search-container">
+                <input type="text" placeholder="Search.." id="movie">
+                <button onclick="getInputValue()"><i class="fa fa-search"></i></button>
+            </div>
+            </div>
+
+
+            <br>
+            <br>
+            <br>
+
+            <div style="text-align: center;">
+
+              <form action="/register" method="POST">
+                <h3>Username:</h3>
+                <input name="newname">
+                <h3>Password:</h3>
+                <input type="password" name="newpass">
+                <br>
+                <br>
+                <button>Register</button>
+                <br>
+                <br>
+                <a style="text-decoration: none;" href="/login">Login</a>
+              </form>
+
+            </div>
+
+
+    </body>
 
 
 
 
-
-        <script>
+    <script>
         function getInputValue(){
             
             var inputVal = document.getElementById("movie").value;
@@ -139,5 +131,5 @@ body {
             window.location.href = "/search/"+inputVal;
         }
     
-          </script>
+    </script>
 </html>
