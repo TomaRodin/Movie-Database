@@ -97,7 +97,7 @@ body {
   -webkit-border-radius: 28;
   background-color: white;
   -moz-border-radius: 28;
-  border-radius: 28px;
+  border-radius: 15px;
   font-family: Arial;
   color: #000000;
   font-size: 20px;
@@ -135,6 +135,10 @@ body {
 }
 .acc {
   margin-right: 100px;
+}
+.imdb {
+  height: 50px;
+  width: auto;
 }
 </style>
 
@@ -216,10 +220,16 @@ body {
 
 
         </div>
+        <br>
+        <br>
         <div class="more" style="margin-left: 100px;" onclick="more()">More?</div>
+        <br>
+        <br>
+        <br>
 
         <div style="margin-left: 100px; margin-right: 50px;" id="moreinf"></div>
-
+        <br>
+        <br>
 
     </body>
 
@@ -271,7 +281,8 @@ body {
 
         function more() {
           $.getJSON( "https://www.omdbapi.com/?t=<%=title%>&apikey=e69e752c", function(data){
-            document.getElementById('moreinf').innerHTML = "<h3>Actors:</h3> <p>"+data.Actors+"</p><br>"  +  "<h3>Awards: </h3><p>"+data.Awards+"</p><br>" + "<h3>Metascore: </h3><p>"+data.Metascore+"</p>" + "<h3>Production: </h3><p>"+data.Production+"</p>" 
+            var link = "https://www.imdb.com/title/"+ data.imdbID
+            document.getElementById('moreinf').innerHTML = "<h3>Actors:</h3> <p>"+data.Actors+"</p><br>"  +  "<h3>Awards: </h3><p>"+data.Awards+"</p><br>" + "<h3>Metascore: </h3><p>"+data.Metascore+"</p>" + "<h3>Production: </h3><p>"+data.Production+"</p>" + "<a href="+link+" class="+"imdb-logo"+"><img src="+"/images/imdb.svg"+" class="+"imdb"+"></a>"
             window.scrollTo(0,document.body.scrollHeight);
           })
         }

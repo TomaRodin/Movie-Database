@@ -141,5 +141,16 @@ body {
 
               })
       }
+      function getInputValue(){
+            
+            var inputVal = document.getElementById("movie").value;
+
+            if (inputVal == "") {
+              return
+            }
+            else {
+            window.location.href = "http://localhost:3000/search/"+inputVal;
+          }
+        }
     </script>
 </html>

@@ -253,6 +253,10 @@ app.get('/images/user.svg',function(req,res){
     res.sendFile(__dirname+'/public/image/user.svg')
 })
 
+app.get('/images/imdb.svg',function(req,res){
+    res.sendFile(__dirname+'/public/image/IMDB.svg')
+})
+
 
 app.listen(3000);
 
