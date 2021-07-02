@@ -78,7 +78,14 @@ body {
   }
 }
 
-
+.form input {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  background-color: #F2F2F2;
+  border-radius: 10px;
+}
     </style>
 
 
@@ -102,11 +109,11 @@ body {
 
             <div style="text-align: center;">
 
-              <form action="/register" method="POST">
-                <h3>Username:</h3>
-                <input name="newname">
-                <h3>Password:</h3>
-                <input type="password" name="newpass">
+              <form class="form" action="/register" method="POST">
+                <input placeholder="Username:" name="newname">
+                <br>
+                <br>
+                <input placeholder="Password:" type="password" name="newpass">
                 <br>
                 <br>
                 <button>Register</button>

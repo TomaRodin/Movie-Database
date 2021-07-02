@@ -32,7 +32,8 @@ app.get('/search/:name',function(req,res){
         }
         else {
             var row = rows[0]
-            res.render(__dirname+'/public/movie.ejs', {title:row.title, release: row.release_date, budget:row.budget, plot:row.overview})
+            var cookie = req.cookies.user
+            res.render(__dirname+'/public/movie.ejs', {title:row.title, release: row.release_date, budget:row.budget, plot:row.overview, user: cookie})
         }
     })
 })
