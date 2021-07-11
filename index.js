@@ -1,6 +1,10 @@
 const bodyParser = require('body-parser')
 var express = require('express')
 var cookieParser = require('cookie-parser')
+var SearchByName = require('./modules/SearchByName')
+var Filter = require('./modules/FilterNumberDecade')
+var CheckWatchlist = require('./modules/CheckWatchlist')
+var WatchlistDel = require('./modules/WatchlistDel')
 var ejs = require('ejs');
 var app = express()
 
@@ -18,15 +22,8 @@ app.get('/',function(req,res){
 
 app.get('/search/:name',function(req,res){
     var title = req.params.name
-    const sqlite3 = require('sqlite3').verbose();
-    let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
 
-    });
-    
-    
-    db.all("SELECT * FROM movies WHERE lower(title) ="+"'"+title.toLowerCase()+"'",function (err,rows){
-        
-        
+    SearchByName.getData(title,function(rows){
         if (rows == undefined) {
             res.send('Not Found')
         }
@@ -36,6 +33,8 @@ app.get('/search/:name',function(req,res){
             res.render(__dirname+'/public/movie.ejs', {title:row.title, release: row.release_date, budget:row.budget, plot:row.overview, user: cookie})
         }
     })
+
+  
 })
 
 app.get('/movies/search',function(req,res){
@@ -44,15 +43,11 @@ app.get('/movies/search',function(req,res){
 
 app.get('/advanced_search/:name',function(req,res){
     var title = req.params.name
-    const sqlite3 = require('sqlite3').verbose();
-    let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
-    });
 
-    db.all("SELECT * FROM movies WHERE lower(title) LIKE "+"'%"+title.toLowerCase()+"%'",function (err,rows){
+    SearchByName.getData(title,function(rows){
         res.json(rows)
     })
-        
-    
+ 
 })
 
 app.get('/find',function(req,res){
@@ -63,16 +58,11 @@ app.get('/find',function(req,res){
 app.get('/find/:number/:decade',function(req,res){
     var rate = req.params.number
     var decade = req.params.decade
-    const sqlite3 = require('sqlite3').verbose();
-    let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
 
-    });
-    
-    
-    db.all("SELECT * FROM movies WHERE vote_average >="+rate,function (err,rows){
-        checkUsers = rows.filter(movie => movie.release_date >= decade);
-        res.json(checkUsers)
+    Filter.getData(rate,decade,function(data){
+        res.json(data)
     })
+
 })
 
 
@@ -208,12 +198,7 @@ app.get('/watchlist',function(req,res){
 })
 
 app.get('/check_watchlist/:title',function(req,res){
-    const sqlite3 = require('sqlite3').verbose();
-    let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
-
-    });
-
-    db.all("SELECT * FROM watchlist WHERE movie ="+"'"+req.params.title+"'"+"AND id ="+"'"+req.cookies.user+"'",function (err,rows){
+    CheckWatchlist.CheckWatchlist(req.params.title,req.cookies.user,function(rows) {
         res.json(rows)
     })
 })
@@ -224,37 +209,12 @@ app.post('/remove_watchlist',function(req,res){
         res.redirect('/login')
     }
     else{
-            const sqlite3 = require('sqlite3').verbose();
-            let db = new sqlite3.Database('movies.sqlite', sqlite3.OPEN_READWRITE, (err) => {
-
-            });
-            db.run("DELETE FROM watchlist WHERE id ="+"'"+req.cookies.user+"'"+"AND movie ="+"'"+req.body.name+"'" );
+        WatchlistDel.Delete(req.cookies.user,req.body.name)
     }
 })
 
-
-app.get('/images/star.svg',function(req,res){
-    res.sendFile(__dirname+'/public/image/star.svg')
-})
-
-app.get('/images/money-bag.svg',function(req,res){
-    res.sendFile(__dirname+'/public/image/money-bag.svg')
-})
-
-app.get('/images/director-chair.svg',function(req,res){
-    res.sendFile(__dirname+'/public/image/director-chair.svg')
-})
-
-app.get('/images/clapperboard.svg',function(req,res){
-    res.sendFile(__dirname+'/public/image/clapperboard.svg')
-})
-
-app.get('/images/user.svg',function(req,res){
-    res.sendFile(__dirname+'/public/image/user.svg')
-})
-
-app.get('/images/imdb.svg',function(req,res){
-    res.sendFile(__dirname+'/public/image/IMDB.svg')
+app.get('/images/:name',function(req,res){
+    res.sendFile(__dirname+'/public/image/'+req.params.name)
 })
 
 

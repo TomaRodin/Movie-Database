@@ -173,7 +173,7 @@
             var rating = document.getElementById('rating').value;
             var decade = document.getElementById('decade').value;
 
-            if (document.getElementById('list').checked == true) {
+            if (document.getElementById('list').checked === true) {
                 $.getJSON( "/find/"+rating+"/"+decade, function(data){
                 data.forEach((el) => {
                   const parentWrapper = document.querySelector('.wrapper');
